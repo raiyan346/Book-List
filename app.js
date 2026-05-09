@@ -38,7 +38,7 @@ UI.prototype.clearTask = function(){
     },1000);
 }
 
-UI.prototype.removeTask = function(element,message,className){
+UI.prototype.removeTask = function(element){
     element.parentElement.parentElement.remove();
     this.showAlert("Book Deleted Successfully", "danger");
 
