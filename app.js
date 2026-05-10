@@ -33,6 +33,7 @@ UI.prototype.clearField = function(){
 
 UI.prototype.clearTask = function(){
     document.querySelector("#book-list").innerHTML = "";
+    
     setTimeout(function(){
     
     },1000);
@@ -70,24 +71,29 @@ UI.prototype.checkDuplicate = function(isbn){
 
 }
 
-UI.prototype.showAlert = function(message, className){
+UI.prototype.showAlert = function(message, type){
 
-    const container = document.querySelector(".container");
-
-    const form = document.querySelector("#book-form");
+    this.clearAlert()
 
     const div = document.createElement("div");
 
-    div.className = `alert alert-${className}`;
+    div.className = `alert alert-${type}`;
 
-    div.appendChild(document.createTextNode(message));
+    div.innerHTML = message;
 
-    container.insertBefore(div, form);
+    document.querySelector(".show-alert").appendChild(div)
 
     setTimeout(function(){
-        div.remove();
-    }, 1000);
+        document.querySelector(".alert").remove()
+    },1000)
+}
 
+UI.prototype.clearAlert = function(){
+    const currentAlert = document.querySelector(".alert")
+
+    if(currentAlert){
+        currentAlert.remove();
+    }
 }
 
 
@@ -102,7 +108,7 @@ document.querySelector("#book-form").addEventListener("submit", function(e){
     const ui = new UI()
 
     if(title === "" || author === "" || isbn === ""){
-        alert("Please fill all fields");
+        ui.showAlert("Please Fill the Fields", "danger");
     }
     else if(ui.checkDuplicate(isbn)){
 
@@ -127,8 +133,16 @@ document.querySelector("#book-form").addEventListener("submit", function(e){
 document.querySelector("#clear-task").addEventListener("click", function(){
 
     const ui = new UI();
-    ui.clearTask();
-    ui.showAlert("All the Book Lists deleted Successfully", "danger")
+
+    if(document.querySelector("#book-list").children.length === 0){
+        ui.showAlert("Book Lists are empty doesn't delete", "warning");
+
+    }
+    else{
+        ui.clearTask();
+        ui.showAlert("All the Book Lists deleted Successfully", "danger");
+    }
+    
 });
 
 document.querySelector("#book-list").addEventListener("click", function(e){
