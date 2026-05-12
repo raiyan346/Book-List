@@ -69,6 +69,31 @@ class UI {
 
     }
 
+     checkDuplicateTitle(title) {
+        const books = document.querySelectorAll("#book-list tr");
+
+        let duplicateTitle = false;
+
+        books.forEach(function (book) {
+
+            const bookTitle = book.children[0].textContent;
+
+            if (bookTitle === title) {
+
+                duplicateTitle = true;
+
+            }
+
+        });
+
+        return duplicateTitle;
+
+        setTimeout(function () {
+
+        }, 1000);
+
+    }
+
     showAlert(message, type) {
         this.clearAlert()
 
@@ -157,9 +182,16 @@ document.querySelector("#book-form").addEventListener("submit", function (e) {
     if (title === "" || author === "" || isbn === "") {
         ui.showAlert("Please Fill the Fields", "danger");
     }
+
     else if (ui.checkDuplicate(isbn)) {
 
         ui.showAlert("Duplicate ISBN Not Allowed", "warning");
+
+    }
+
+    else if (ui.checkDuplicateTitle(title)) {
+
+        ui.showAlert("Duplicate Title Not Allowed", "warning");
 
     }
 
