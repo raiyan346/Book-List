@@ -138,6 +138,9 @@ class Storage {
     }
 }
 
+const storage = new Storage();
+document.addEventListener("DOMContentLoaded",storage.displayBook());
+
 
 document.querySelector("#book-form").addEventListener("submit", function (e) {
 
